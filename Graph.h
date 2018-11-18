@@ -1,13 +1,15 @@
-typedef Graph struct graph;
+#include "generics/List.h"
+
+typedef struct graph Graph;
 
 //Mount Graph
-Graph mountGraph();
+Graph * mountGraph();
 
-void destroyGraph(Graph g);
+void destroyGraph(Graph * g);
 
-void addVertex(Graph * g, int key);
+void addVertex(Graph * g, int key, void * item);
 
-void addEdge(Graph * g, int key);
+void addEdge(Graph * g, int key,int weight, int keyVFrom, int keyVTo);
 
 void rmVertex(Graph * g, int key);
 

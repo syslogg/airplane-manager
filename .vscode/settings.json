@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "limits.h": "c",
+        "stdlib.h": "c",
+        "huffman.h": "c",
+        "graph.h": "c",
+        "graphminpath.h": "c"
+    },
+    "C_Cpp.intelliSenseEngineFallback": "Enabled"
+}

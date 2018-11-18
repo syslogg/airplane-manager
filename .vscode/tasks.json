@@ -1,0 +1,56 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "windows": {
+                "command": "C:/MinGW/bin/gcc.exe",
+                "args": [
+                    "main.c",
+                    "Graph.h",
+                    "GraphMinPath.h",
+                    "GraphIncidenceList.c",
+                    "generics/List.h",
+                    "generics/LinkedList.c",
+                    "-o",
+                    "airplane.exe"
+                ]
+            },
+            "linux": {
+                "command": "gcc",
+                "args": [
+                    "-g",
+                    "main.c",
+                    "generics/List.h",
+                    "generics/list/LinkedList.c",
+                    "-o",
+                    "a.out"
+                ]
+            },
+            "osx": {
+                "command": "gcc",
+                "args": [
+                    "-g3",
+                    "main.c",
+                    "generics/List.h",
+                    "generics/Tree.h",
+                    "generics/list/LinkedList.c",
+                    "generics/tree/TreeBin.c",
+                    "huffman/huffman.c",
+                    "huffman/huffman.h"
+                ]
+            }
+        }
+    ]
+}

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <string.h>
-#include "List.h"
+#include "generics/List.h"
 #include "Graph.h"
 
 typedef struct graph Graph;
@@ -26,36 +26,41 @@ struct vertex {
 	void * info; // EXT
 };
 
-struct gaph {
-	Edge * edges; //List Type: Edges
+struct graph {
+	List * edges; //List Type: Edges
 	List * vertexes; //List Type: Vertex
 };
 
+//Declaration
+Vertex * findVertex(Graph *g, int key);
+void destroyEdge(Edge * e);
+void destroyVertex(Vertex * v);
+
 //Public methods
 
-Graph mountGraph() {
+Graph * mountGraph() {
 	Graph * g = (Graph *) malloc(sizeof(struct graph));
 	g->edges = list(); //List Type: Edges
 	g->vertexes = list(); //List Type: Vertex
 	return g;
 }
 
-void destroyGraph(Graph g) {
+void destroyGraph(Graph * g) {
 	int len = length(g->edges);
 	int i;
-	
+
 	for (i = 0; i < len; i++) {
 		destroyEdge(pop(g->edges));
 	}
-	
+
 	len = length(g->vertexes);
 	for (i = 0; i < len; i++) {
 		destroyVertex(pop(g->vertexes));
 	}
-	
+
 	destroyList(g->edges);
 	destroyList(g->vertexes);
-	
+
 	free(g);
 }
 
@@ -64,7 +69,7 @@ List * getEdgeList(Graph * g) {
 }
 
 List * getVertexList(Graph * g){
-	return g->vertex;
+	return g->vertexes;
 }
 
 void addVertex(Graph * g, int key, void * item) {
@@ -74,9 +79,9 @@ void addVertex(Graph * g, int key, void * item) {
 		v->info = item;
 		listAdd(g->vertexes,v);
 	} else {
-		printf("Já existe um vertice com esse ID")
+		printf("JÃ¡ existe um vertice com esse ID");
 	}
-	
+
 }
 
 void addEdge(Graph * g, int key,int weight, int keyVFrom, int keyVTo) {
@@ -84,23 +89,23 @@ void addEdge(Graph * g, int key,int weight, int keyVFrom, int keyVTo) {
 	Edge * e = (Edge *) malloc(sizeof(struct edge));
 	Vertex * from = findVertex(g, keyVFrom);
 	Vertex * to = findVertex(g, keyVTo);
-	
+
 	e->key = key;
 	e->weight = weight;
 	e->from = from;
 	e->to = to;
-	
+
 	listAdd(g->edges,e);
 }
 
 void rmVertex(Graph * g, int key) {
 	//TODO: Method
-	printf("Nao está implementado");
+	printf("Nao estï¿½ implementado");
 }
 
 void rmEdge(Graph * g, int key) {
 	//TODO: Method
-	printf("Nao está implementado");
+	printf("Nao estï¿½ implementado");
 }
 
 //Private methods

@@ -1,1 +1,1 @@
-typedef Graph struct graph;
+typedef struct graph Graph;
