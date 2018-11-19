@@ -31,6 +31,7 @@ struct graph {
 
 //Declaration
 Vertex * findVertex(Graph *g, int key);
+Edge * findEdge(Graph *g, int key);
 void destroyEdge(Edge * e);
 void destroyVertex(Vertex * v);
 
@@ -70,7 +71,7 @@ List * getEdgeList(Graph * g) {
 
 	for (i = 0; i < len; i++) {
 		int keyR = ((Vertex *) getValue(g->edges, i))->key;
-		push(listIds, keyR);
+		push(listIds, &keyR);
 	}
 	return listIds;
 }
@@ -83,7 +84,7 @@ List * getVertexList(Graph * g){
 
 	for (i = 0; i < len; i++) {
 		int keyR = ((Vertex *) getValue(g->vertexes,i))->key;
-		push(listIds, keyR);
+		push(listIds, &keyR);
 	}
 	return listIds;
 }
@@ -155,10 +156,10 @@ void printGraph(Graph * g) {
 
 	printf("\nEdges:\n\n");
 
-	len = length(g->edges);
-	for (i = 0; i < len; i++){
+	int lenn = length(g->edges);
+	for (i = 0; i < lenn; i++){
 		Edge * e = getValue(g->edges, i);
-		printf("Key: %d | From: %d, To: %d \n", e->key,e->from->key, e->to->key);
+		printf("Key: %d | From: %d, To: %d \n", e->key, e->from->key, e->to->key);
 	}
 }
 
@@ -178,7 +179,7 @@ Edge * findEdge(Graph *g, int key) {
 	int len = length(g->edges);
 	int i;
 	for (i = 0; i < len; i++) {
-		Vertex * act = (Vertex *) getValue(g->edges,i);
+		Edge * act = (Edge *) getValue(g->edges,i);
 		if(act->key == key)
 			return act;
 	}

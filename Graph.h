@@ -27,6 +27,8 @@ int getVertexByToKeyEdge(Graph * g, int keyEdge);
 
 void setWeightEdge(Graph * g, int keyEdge, int w);
 
+void printGraph(Graph * g);
+
 /*
 int key; //EXT
 int weight; // EXT
