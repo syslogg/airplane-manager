@@ -15,15 +15,17 @@ void rmVertex(Graph * g, int key);
 
 void rmEdge(Graph * g, int key);
 
-List * getEdgeList(Graph * g); //Priority
+List * getEdgeList(Graph * g);
 
-List * getVertexList(Graph * g); //TODO: Method
+List * getVertexList(Graph * g);
 
-int getWeightEdge(Graph * g, int keyVertex);  //TODO: Method
+int getWeightEdge(Graph * g, int keyEdge);
 
-int getFromKeyEdge(Graph * g, int keyVertex);  //TODO: Method
+int getVertexByFromKeyEdge(Graph * g, int keyEdge);
 
-int getToKeyEdge(Graph * g, int keyVertex);  //TODO: Method
+int getVertexByToKeyEdge(Graph * g, int keyEdge);
+
+void setWeightEdge(Graph * g, int keyEdge, int w);
 
 /*
 int key; //EXT

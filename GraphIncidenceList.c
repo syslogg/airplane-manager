@@ -12,8 +12,6 @@ typedef struct vertex Vertex;
 /*
 	--== Incidence List ==--
 */
-
-
 struct edge {
 	int key; //EXT
 	int weight; // EXT
@@ -65,11 +63,29 @@ void destroyGraph(Graph * g) {
 }
 
 List * getEdgeList(Graph * g) {
-	return g->edges;
+	//Retornar as ids das arestas
+	List * listIds = list();
+	int i;
+	int len = length(g->edges);
+
+	for (i = 0; i < len; i++) {
+		int keyR = ((Vertex *) getValue(g->edges, i))->key;
+		push(listIds, keyR);
+	}
+	return listIds;
 }
 
 List * getVertexList(Graph * g){
-	return g->vertexes;
+	//Retornar as ids dos vertices
+	List * listIds = list();
+	int i;
+	int len = length(g->vertexes);
+
+	for (i = 0; i < len; i++) {
+		int keyR = ((Vertex *) getValue(g->vertexes,i))->key;
+		push(listIds, keyR);
+	}
+	return listIds;
 }
 
 void addVertex(Graph * g, int key, void * item) {
@@ -108,13 +124,61 @@ void rmEdge(Graph * g, int key) {
 	printf("Nao est� implementado");
 }
 
-//Private methods
+int getWeightEdge(Graph * g, int keyEdge){
+	Edge * e = findEdge(g, keyEdge);
+	return e->key;
+}
 
+int getVertexByFromKeyEdge(Graph * g, int keyEdge) {
+	Edge * e = findEdge(g, keyEdge);
+	return e->from->key;
+}
+
+int getVertexByToKeyEdge(Graph * g, int keyEdge) {
+	Edge * e = findEdge(g, keyEdge);
+	return e->to->key;
+}
+
+void setWeightEdge(Graph * g, int keyEdge, int w) {
+	Edge * e = findEdge(g, keyEdge);
+	e->weight = w;
+}
+
+void printGraph(Graph * g) {
+	int len = length(g->vertexes), i;
+	printf("Print the Graph: \n\n");
+	printf("Vertexes:\n");
+	for (i = 0; i < len; i++) {
+		Vertex * v = getValue(g->vertexes,i);
+		printf("Key: %d\n", v->key);
+	}
+
+	printf("\nEdges:\n\n");
+
+	len = length(g->edges);
+	for (i = 0; i < len; i++){
+		Edge * e = getValue(g->edges, i);
+		printf("Key: %d | From: %d, To: %d \n", e->key,e->from->key, e->to->key);
+	}
+}
+
+//Private methods
 Vertex * findVertex(Graph *g, int key) {
 	int len = length(g->vertexes);
 	int i;
 	for (i = 0; i < len; i++) {
 		Vertex * act = (Vertex *) getValue(g->vertexes,i);
+		if(act->key == key)
+			return act;
+	}
+	return NULL;
+}
+
+Edge * findEdge(Graph *g, int key) {
+	int len = length(g->edges);
+	int i;
+	for (i = 0; i < len; i++) {
+		Vertex * act = (Vertex *) getValue(g->edges,i);
 		if(act->key == key)
 			return act;
 	}
