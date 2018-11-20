@@ -22,6 +22,7 @@ struct edge {
 
 struct vertex {
 	int key; // EXT
+	char name[60]; // EXT
 	void * info; // EXT
 };
 
@@ -84,8 +85,9 @@ List * getVertexList(Graph * g){
 	int len = length(g->vertexes);
 
 	for (i = 0; i < len; i++) {
-		int keyR = ((Vertex *) getValue(g->vertexes,i))->key;
-		push(listIds, &keyR);
+		int * keyR = (int *) malloc(sizeof(int));
+		*keyR = ((Vertex *) getValue(g->vertexes,i))->key;
+		push(listIds, keyR);
 	}
 	return listIds;
 }
@@ -118,7 +120,7 @@ void addEdge(Graph * g, int key,int weight, int keyVFrom, int keyVTo) {
 
 void rmVertex(Graph * g, int key) {
 	//TODO: Method
-	printf("Nao est� implementado");
+	printf("Nao está implementado");
 }
 
 void rmEdge(Graph * g, int key) {
@@ -164,8 +166,26 @@ void printGraph(Graph * g) {
 	}
 }
 
+char * getName(Graph * g, int keyVertex) {
+	Vertex * v = findVertex(g,keyVertex);
+	if(v != NULL) {
+		return v->name;
+	}
+	printf("ERROR: Não existe a chave dessa vertice.");
+	return NULL;
+}
+
+void setName(Graph * g, int keyVertex, char * str) {
+	Vertex * v = findVertex(g,keyVertex);
+	if(v != NULL) {
+		strcpy(v->name, str);
+	} else {
+		printf("\n\nERROR: Não existe a chave dessa vertice.\n\n");
+	}
+}
+
 //Private methods
-Vertex * findVertex(Graph *g, int key) {
+Vertex * findVertex(Graph * g, int key) {
 	int len = length(g->vertexes);
 	int i;
 	for (i = 0; i < len; i++) {

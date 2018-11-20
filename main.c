@@ -22,7 +22,10 @@ int main(int argc, char *argv[]) {
 
 	printGraph(g);
 
+	minPath(g, 1, 2);
+
 	printf("\n\n\nDeu certo!");
-	system("pause");
+	//system("pause");
+	getchar();
 	return 0;
 }

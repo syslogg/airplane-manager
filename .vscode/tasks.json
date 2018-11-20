@@ -45,6 +45,7 @@
                     "main.c",
                     "Graph.h",
                     "GraphMinPath.h",
+                    "GraphBellmanFord.c",
                     "GraphIncidenceList.c",
                     "generics/List.h",
                     "generics/LinkedList.c",

@@ -4,7 +4,8 @@
         "stdlib.h": "c",
         "huffman.h": "c",
         "graph.h": "c",
-        "graphminpath.h": "c"
+        "graphminpath.h": "c",
+        "stdio.h": "c"
     },
     "C_Cpp.intelliSenseEngineFallback": "Enabled"
 }

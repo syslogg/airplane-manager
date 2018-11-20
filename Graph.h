@@ -29,14 +29,6 @@ void setWeightEdge(Graph * g, int keyEdge, int w);
 
 void printGraph(Graph * g);
 
-/*
-int key; //EXT
-int weight; // EXT
-Vertex * from; // EXT_ID
-Vertex * to; // EXT_ID
-*/
+char * getName(Graph * g, int keyVertex);
 
-
-//TODO: List of vertex and edges with voids pointer
-
-
+void setName(Graph * g, int keyVertex, char * str);
