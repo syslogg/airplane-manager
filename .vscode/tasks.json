@@ -43,12 +43,11 @@
                 "args": [
                     "-g3",
                     "main.c",
+                    "Graph.h",
+                    "GraphMinPath.h",
+                    "GraphIncidenceList.c",
                     "generics/List.h",
-                    "generics/Tree.h",
-                    "generics/list/LinkedList.c",
-                    "generics/tree/TreeBin.c",
-                    "huffman/huffman.c",
-                    "huffman/huffman.h"
+                    "generics/LinkedList.c",
                 ]
             }
         }

@@ -13,7 +13,6 @@ typedef struct vertex Vertex;
 	--== Incidence List ==--
 */
 
-
 struct edge {
 	int key; //EXT
 	int weight; // EXT
@@ -105,7 +104,7 @@ void rmVertex(Graph * g, int key) {
 
 void rmEdge(Graph * g, int key) {
 	//TODO: Method
-	printf("Nao est� implementado");
+	printf("Nao está implementado");
 }
 
 //Private methods

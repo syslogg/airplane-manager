@@ -1,0 +1,6 @@
+*.gch
+*.exe
+*.out
+*.dSYM/
+*.layout
+*.dev
