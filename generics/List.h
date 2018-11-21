@@ -6,6 +6,7 @@ typedef struct list List;
 List * list();
 void destroyList(List * l);
 
+// TODO: Criar novo list add com numeros inteiros (definir tipos de listas para facilitar a implementacoes de outras atividades)
 void listAdd(List * l, void * item);
 void listRemove(List * l, int i);
 

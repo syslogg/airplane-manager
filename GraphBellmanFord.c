@@ -63,7 +63,6 @@ void bellmanFord(Graph * g, BellmanFord * bf, int keyFrom, int keyTo) {
             //Relaxar o programa
             relax(src,dest,getWeightEdge(g,edgeId));
         }
-
     }
 }
 
@@ -100,37 +99,24 @@ BellmanFord * initAlgorithms(Graph * g, int keyVertexSource) {
         } else {
             vertexBf->weight = INT_MAX;
         }
-        listAdd(bf->vertexes, bf);
+        listAdd(bf->vertexes, vertexBf);
     }
 
     List * edgesList = getEdgeList(g);
     len = length(edgesList);
     //Transfere os ids dos o struct
     for (i = 0; i < len; i++) {
-        int keyEdge = getValueInt(edgesList, i);
-        listAdd(bf->edges, &keyEdge);
+        int * keyEdge = (int *) malloc(sizeof(int)); //TODO: Implementar na TAD LISTA
+        *keyEdge = getValueInt(edgesList, i);
+        listAdd(bf->edges, keyEdge);
     }
 
     return bf;
 }
 
 void relax(VertexBellmanFord * source, VertexBellmanFord * dest, int w) {
-    // RELAX(u, v, w)
-    //    if d[v] > d[u] + w(u, v)
-    //       then d[v] ← d[u] + w(u, v)
-    //            π[v] ← u
-
-    if(dest->weight > source->weight + w) {
+    if(dest->weight > (source->weight == INT_MAX ? INT_MAX : source->weight + w)) {
         dest->weight = source->weight + w;
         dest->keyPrev = source->keyVertex;
     }
-
 }
-
-
-/*
-
-STG
-
-*/
-

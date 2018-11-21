@@ -72,10 +72,11 @@ List * getEdgeList(Graph * g) {
 	int len = length(g->edges);
 
 	for (i = 0; i < len; i++) {
-		int keyR = ((Vertex *) getValue(g->edges, i))->key;
-		push(listIds, &keyR);
+		int * keyR = (int *) malloc(sizeof(int));
+		*keyR = ((Vertex *) getValue(g->edges, i))->key;
+		push(listIds, keyR);
 	}
-	return listIds; //BUG ENCONTRADO AQUI!!!
+	return listIds;
 }
 
 List * getVertexList(Graph * g){
@@ -130,7 +131,7 @@ void rmEdge(Graph * g, int key) {
 
 int getWeightEdge(Graph * g, int keyEdge){
 	Edge * e = findEdge(g, keyEdge);
-	return e->key;
+	return e->weight;
 }
 
 int getVertexByFromKeyEdge(Graph * g, int keyEdge) {
