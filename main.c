@@ -14,11 +14,11 @@ int main(int argc, char *argv[]) {
 	addVertex(g, 3, &v);
 	addVertex(g, 4, &v);
 
-	addEdge(g, 1, 3, 1, 2);
-	addEdge(g, 2, 5, 2, 3);
-	addEdge(g, 3, 4, 3, 4);
-	addEdge(g, 4, 1, 4, 1);
-	addEdge(g, 5, 2, 4, 2);
+	addEdge(g, 3, 3, 1, 2);
+	addEdge(g, 4, 5, 2, 3);
+	addEdge(g, 5, 4, 3, 4);
+	addEdge(g, 6, 1, 4, 1);
+	addEdge(g, 7, 2, 4, 2);
 
 	printGraph(g);
 

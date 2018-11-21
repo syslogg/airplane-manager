@@ -75,7 +75,7 @@ List * getEdgeList(Graph * g) {
 		int keyR = ((Vertex *) getValue(g->edges, i))->key;
 		push(listIds, &keyR);
 	}
-	return listIds;
+	return listIds; //BUG ENCONTRADO AQUI!!!
 }
 
 List * getVertexList(Graph * g){

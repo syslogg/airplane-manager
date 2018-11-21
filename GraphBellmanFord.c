@@ -23,8 +23,9 @@ typedef struct bellmanFord BellmanFord;
 
 //Declaracoes
 BellmanFord * initAlgorithms(Graph * g,int keyVertexSource);
-void relax(VertexBellmanFord * source, VertexBellmanFord * dest);
-VertexBellmanFord * findVertex(BellmanFord * bf, int key);
+void relax(VertexBellmanFord * source, VertexBellmanFord * dest, int w);
+VertexBellmanFord * findVertexBf(BellmanFord * bf, int key);
+void bellmanFord(Graph * g, BellmanFord * bf, int keyFrom, int keyTo);
 
 
 /*
@@ -43,29 +44,35 @@ void minPath(Graph * g, int keyFrom, int keyTo) {
 // Private methods
 
 void bellmanFord(Graph * g, BellmanFord * bf, int keyFrom, int keyTo) {
-    List * vertexes = getVertexList(bf->vertexes);
-    int i, len = length(bf->vertexes);
+    List * vertexes = bf->vertexes;
+    int i, lenVertex = length(vertexes);
 
-    for (i = 0; i < len; i++) { // Roda a quantidade de vertice
+    List * edges = bf->edges;
+    int lenEdge = length(edges);
+
+    for (i = 0; i < lenVertex; i++) { // Roda a quantidade de vertice
         //Roda a quantidade de arestas
-        List * edges = getEdgeList(bf->edges);
-        int lenI = length(edges), e;
 
-        for (e = 0; e < lenI; e++) {
-            VertexBellmanFord * vbf = findVertex(bf, getValueInt(edges, e));
+        int e;
+        for (e = 0; e < lenEdge; e++) {
+            //VertexBellmanFord * vbf = findVertex(bf, );
+            int edgeId = getValueInt(edges, e);
+            int srcId = getVertexByFromKeyEdge(g, edgeId), destId = getVertexByToKeyEdge(g,edgeId);
+            VertexBellmanFord * src = findVertexBf(bf,srcId);
+            VertexBellmanFord * dest = findVertexBf(bf,destId);
             //Relaxar o programa
-            printf("TESTE");
+            relax(src,dest,getWeightEdge(g,edgeId));
         }
 
     }
 }
 
-VertexBellmanFord * findVertex(BellmanFord * bf, int key){
+VertexBellmanFord * findVertexBf(BellmanFord * bf, int key){
     int len = length(bf->vertexes);
 	int i;
 	for (i = 0; i < len; i++) {
-		Vertex * act = (VertexBellmanFord *) getValue(bf->vertexes,i);
-		if(act->key == key)
+		VertexBellmanFord * act = (VertexBellmanFord *) getValue(bf->vertexes,i);
+		if(act->keyVertex == key)
 			return act;
 	}
 	return NULL;
@@ -107,7 +114,23 @@ BellmanFord * initAlgorithms(Graph * g, int keyVertexSource) {
     return bf;
 }
 
-void relax(VertexBellmanFord * source, VertexBellmanFord * dest) {
+void relax(VertexBellmanFord * source, VertexBellmanFord * dest, int w) {
+    // RELAX(u, v, w)
+    //    if d[v] > d[u] + w(u, v)
+    //       then d[v] ← d[u] + w(u, v)
+    //            π[v] ← u
+
+    if(dest->weight > source->weight + w) {
+        dest->weight = source->weight + w;
+        dest->keyPrev = source->keyVertex;
+    }
 
 }
+
+
+/*
+
+STG
+
+*/
 

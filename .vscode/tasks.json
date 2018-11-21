@@ -32,8 +32,12 @@
                 "args": [
                     "-g",
                     "main.c",
+                    "Graph.h",
+                    "GraphMinPath.h",
+                    "GraphBellmanFord.c",
+                    "GraphIncidenceList.c",
                     "generics/List.h",
-                    "generics/list/LinkedList.c",
+                    "generics/LinkedList.c",
                     "-o",
                     "a.out"
                 ]
