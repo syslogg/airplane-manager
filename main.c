@@ -14,15 +14,14 @@ int main(int argc, char *argv[]) {
 	addVertex(g, 3, &v);
 	addVertex(g, 4, &v);
 
-	addEdge(g, 3, 3, 1, 2);
-	addEdge(g, 4, 5, 2, 3);
-	addEdge(g, 5, 4, 3, 4);
-	addEdge(g, 6, 1, 4, 1);
-	addEdge(g, 7, 2, 4, 2);
+	addEdge(g, 1, 1, 1, 2);
+	addEdge(g, 2, 2, 2, 3);
+	addEdge(g, 3, 2, 1, 3);
+	addEdge(g, 4, 3, 3, 4);
 
 	printGraph(g);
 
-	minPath(g, 1, 2);
+	minPath(g, 1, 3);
 
 	printf("\n\n\nDeu certo!");
 	//system("pause");
