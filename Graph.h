@@ -11,6 +11,8 @@ void addVertex(Graph * g, int key, void * item);
 
 void addEdge(Graph * g, int key,int weight, int keyVFrom, int keyVTo);
 
+void addDoubleEdge(Graph * g, int key1, int key2, int weight, int keyV1, int keyV2);
+
 void rmVertex(Graph * g, int key);
 
 void rmEdge(Graph * g, int key);

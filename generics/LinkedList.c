@@ -159,6 +159,25 @@ void push(List * l, void * item) {
     listAdd(l,item);
 }
 
+void reverseList(List * l) {
+    if(l != NULL) {
+        NodeList * aux = l->first;
+        NodeList * prev = NULL;
+        NodeList * next = NULL;
+
+        while (aux != NULL){
+            next = aux->next;
+            aux->next = prev;
+            prev = aux;
+            aux = next;
+        }
+
+        NodeList * n = l->first;
+        l->first = l->last;
+        l->last = n;
+    }
+}
+
 //Public
 void * pop(List * l) {
     NodeList * aux = l->first;

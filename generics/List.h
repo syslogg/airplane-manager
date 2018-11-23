@@ -25,6 +25,8 @@ int length(List * l);
 
 void * * getAllList(List * l);
 
+void reverseList(List * l);
+
 int interateList(List * l);
 
 

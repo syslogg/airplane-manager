@@ -26,7 +26,7 @@ BellmanFord * initAlgorithms(Graph * g,int keyVertexSource);
 void relax(VertexBellmanFord * source, VertexBellmanFord * dest, int w);
 VertexBellmanFord * findVertexBf(BellmanFord * bf, int key);
 int bellmanFord(Graph * g, BellmanFord * bf, int keyFrom, int keyTo);
-void printPath(BellmanFord * bf, int keySrc, int keyDest);
+List * mountPath(BellmanFord * bf, int keySrc, int keyDest);
 
 
 /*
@@ -35,19 +35,20 @@ void printPath(BellmanFord * bf, int keySrc, int keyDest);
 
 // Public methods
 
-void minPath(Graph * g, int keyFrom, int keyTo) {
+List * minPath(Graph * g, int keyFrom, int keyTo) {
     //Imprimir o caminho
     BellmanFord * bf = initAlgorithms(g, keyFrom);
     
     if(bellmanFord(g, bf, keyFrom, keyTo)){
         //Pega os anteriores a partir do destino
-        printPath(bf,keyFrom,keyTo);
+        return mountPath(bf,keyFrom,keyTo);
     }
+    return NULL;
 }
 
 // Private methods
 
-void printPath(BellmanFord * bf, int keySrc, int keyDest) {
+List * mountPath(BellmanFord * bf, int keySrc, int keyDest) {
 
     int keyAct = keyDest;
     List * path = list();
@@ -64,12 +65,16 @@ void printPath(BellmanFord * bf, int keySrc, int keyDest) {
         keyAct = act->keyPrev;
     }
     
-    int i, len = length(path);
+    reverseList(path);
+
+    return path;
+
+    /*int i, len = length(path);
     printf("\n[ ");
     for (i = 0; i < len; i++) {
         printf(", %d", getValueInt(path, i));
     }
-    printf(" ]\n");
+    printf(" ]\n");*/
 
 }
 

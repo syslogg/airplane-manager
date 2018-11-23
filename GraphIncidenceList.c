@@ -105,6 +105,11 @@ void addVertex(Graph * g, int key, void * item) {
 
 }
 
+void addDoubleEdge(Graph * g, int key1, int key2, int weight, int keyV1, int keyV2) {
+	addEdge(g,key1,weight,keyV1,keyV2);
+	addEdge(g,key2,weight,keyV2,keyV1);
+}
+
 void addEdge(Graph * g, int key,int weight, int keyVFrom, int keyVTo) {
 	//TODO: Create code to verify if there's duplicated key
 	Edge * e = (Edge *) malloc(sizeof(struct edge));
@@ -155,7 +160,7 @@ void printGraph(Graph * g) {
 	printf("Vertexes:\n");
 	for (i = 0; i < len; i++) {
 		Vertex * v = getValue(g->vertexes,i);
-		printf("Key: %d\n", v->key);
+		printf("Name: %s\n", v->name);
 	}
 
 	printf("\nEdges:\n\n");
