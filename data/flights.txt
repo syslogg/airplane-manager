@@ -1,10 +1,10 @@
 | ID | Tempo (h) | Escalas | Partida | Chegada |
-| 1 | 4         | 2       | SBFZ    | SBGR    |
-| 2 | 4         | 3       | SBFZ    | SBGL    |
-| 3 | 3         | 3       | SBGL    | SBBR    |
-| 4 | 1         | 0       | SBGL    | SBRJ    |
-| 5 | 2         | 0       | SBGL    | SBSP    |
-| 6 | 1         | 0       | SBSP    | SBGR    |
-| 7 | 1         | 0       | SBGR    | SBSP    |
-| 8 | 3     | 3       | SBSP    | SBBR    |
-| 9 | 3         | 2       | SBBR    | SBFZ    |
+| 1  | 4         | 2       | SBFZ    | SBGR    |
+| 2  | 4         | 3       | SBFZ    | SBGL    |
+| 3  | 3         | 3       | SBGL    | SBBR    |
+| 4  | 1         | 0       | SBGL    | SBRJ    |
+| 5  | 2         | 0       | SBGL    | SBSP    |
+| 6  | 1         | 0       | SBSP    | SBGR    |
+| 7  | 1         | 0       | SBGR    | SBSP    |
+| 8  | 3         | 3       | SBSP    | SBBR    |
+| 9  | 3         | 2       | SBBR    | SBFZ    |

@@ -164,11 +164,10 @@ void printGraph(Graph * g) {
 	}
 
 	printf("\nEdges:\n\n");
-
 	int lenn = length(g->edges);
 	for (i = 0; i < lenn; i++){
 		Edge * e = getValue(g->edges, i);
-		printf("Key: %d | From: %d, To: %d \n", e->key, e->from->key, e->to->key);
+		printf("Key: %d | Weight: %d | From: %s, To: %s \n", e->key, e->weight, e->from->name, e->to->name);
 	}
 }
 

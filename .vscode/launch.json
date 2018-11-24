@@ -10,7 +10,7 @@
             "stopAtEntry": true,
             "cwd": "${workspaceRoot}",
             "environment": [],
-            "externalConsole": false,
+            "externalConsole": true,
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
@@ -23,9 +23,9 @@
                 "trace": false
             },
             "windows": {
-                "program": "${workspaceRoot}/airplane.exe",
+                "program": "${workspaceRoot}\\airplane.exe",
                 "MIMode": "gdb",
-                "miDebuggerPath": "C:/MinGW/bin/gdb.exe" // Path to gdb on windows
+                "miDebuggerPath": "C:\\MinGW\\bin\\gdb.exe" // Path to gdb on windows
             },
             "linux": {
                 "program": "${workspaceRoot}/a.out",
