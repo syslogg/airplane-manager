@@ -55,6 +55,7 @@ void bestCost(FlightMap * fm, char * departure, char * arrival);
 void printPath(FlightMap * fm, List * path);
 void console(FlightMap * fm, bool write);
 void command(FlightMap * fm, char * cmd);
+void chooses(FlightMap * fm, COST_TYPE * c, char * derp, char * arri);
 void clear();
 
 int main(int argc, char *argv[]) {
@@ -70,7 +71,7 @@ int main(int argc, char *argv[]) {
 
 	printf("----====- Gerenciamento de Voos e Aeroportos -====----\n");
 	printf("\nUse o comando 'help' para ajuda\n");
-	printf("Os aeroportos e rotas já foram carregados!\n");
+	printf("Os aeroportos e rotas ja foram carregados!\n");
 	//printGraph(fm->g);
 	//printf("\n\n");
 	console(fm,true);
@@ -101,33 +102,62 @@ void command(FlightMap * fm, char * cmd) {
         clear();
 		selectCost(fm,c);
 		bestCost(fm,params[0], params[1]);
-    } else if(!strcmp(cmd,"percurso")) {
+    } else if(!strcmp(cmd,"flight")) {
         clear();
 		char derp[8], arri[8];
 		chooses(fm, &c, derp, arri);
-		command(fm, "bestcost 1 SBFZ SBGL");
-    }
+		char cmd[100];
+		sprintf(cmd,"bestcost %d %s %s", c, derp, arri);
+		command(fm, cmd);
+    } else if (!strcmp(cmd,"cls")){
+		clear();
+	}else if (!strcmp(cmd,"help")) {
+		clear();
+		printf("---------======- Ajuda - Sistema de Gerenciamento de Voos com Grafos -======---------\n");
+		printf("\n");
+		printf("\n");
+		printf("\n");
+		printf("\n");
+	} else {
+		clear();
+		printf("Esse comando não existe!\nUse o comando 'help' para ajuda.");
+		getchar();
+		clear();
+	}
 
 }
 
 void chooses(FlightMap * fm, COST_TYPE * c, char * derp, char * arri) {
 	int len = length(fm->airports), i;
 	int input;
-	printf("Escolha o aeroporto de origem");
+	printf("Escolha o aeroporto de origem\n\n");
 	for (i = 0; i < len;i++) {
 		Airport * act = (Airport *) getValue(fm->airports, i);
 		printf("%d. %s | %s - %s\n", i+1, act->icao, act->name, act->cityState);
 	}
-	scanf("%s", &input);
+	scanf("%d", &input);
 	input -= 1;
 	strcpy(derp,((Airport *)getValue(fm->airports,input))->icao);
+	clear();
 
-	printf("Escolha o aeroporto de destino");
+	printf("Escolha o aeroporto de destino\n\n");
 	for (i = 0; i < len;i++) {
 		Airport * act = (Airport *) getValue(fm->airports, i);
 		printf("%d. %s | %s - %s\n", i+1, act->icao, act->name, act->cityState);
 	}
+	scanf("%d", &input);
+	input -= 1;
+	strcpy(arri, ((Airport *) getValue(fm->airports,input))->icao);
+	clear();
 
+	printf("Escolha o tipo de percurso:\n\n");
+	printf("1. Por quantidade de paradas.\n");
+	printf("2. Pela duração total.\n");
+	printf("3. Por distância percorrida.\n");
+	printf("4. Por tempo de voo.\n");
+	scanf("%d",&input);
+	*c = input;
+	clear();
 }
 
 void selectCost(FlightMap * fm, COST_TYPE c) {
