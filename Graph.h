@@ -21,6 +21,8 @@ List * getEdgeList(Graph * g);
 
 List * getVertexList(Graph * g);
 
+int calculateCost(Graph * g, List * path);
+
 int getWeightEdge(Graph * g, int keyEdge);
 
 int getVertexByFromKeyEdge(Graph * g, int keyEdge);

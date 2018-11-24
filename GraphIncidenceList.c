@@ -36,6 +36,7 @@ Vertex * findVertex(Graph *g, int key);
 Edge * findEdge(Graph *g, int key);
 void destroyEdge(Edge * e);
 void destroyVertex(Vertex * v);
+Edge * findEdgeByVertexes(Graph *g, int src, int dest);
 
 //Public methods
 
@@ -124,6 +125,18 @@ void addEdge(Graph * g, int key,int weight, int keyVFrom, int keyVTo) {
 	listAdd(g->edges,e);
 }
 
+int calculateCost(Graph * g, List * path){
+	int i, len = length(path), sum = 0;
+	for (i = 0; i < len-1; i++) {
+		int keyV = getValueInt(path,i);
+		int keyVNext = getValueInt(path,i+1);
+		Edge * e = findEdgeByVertexes(g, keyV, keyVNext);
+		sum += e->weight;
+	}
+
+	return sum;
+}
+
 void rmVertex(Graph * g, int key) {
 	//TODO: Method
 	printf("Nao está implementado");
@@ -207,6 +220,17 @@ Edge * findEdge(Graph *g, int key) {
 	for (i = 0; i < len; i++) {
 		Edge * act = (Edge *) getValue(g->edges,i);
 		if(act->key == key)
+			return act;
+	}
+	return NULL;
+}
+
+Edge * findEdgeByVertexes(Graph *g, int src, int dest) {
+	int len = length(g->edges);
+	int i;
+	for (i = 0; i < len; i++) {
+		Edge * act = (Edge *) getValue(g->edges,i);
+		if(act->from->key == src && act->to->key == dest)
 			return act;
 	}
 	return NULL;
