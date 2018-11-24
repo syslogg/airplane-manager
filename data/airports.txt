@@ -1,4 +1,4 @@
-| ICAO | Cidade/UF           | Nome Aeroporto                                   | Espera (horas) | 
+| ICAO | Cidade/UF           | Nome Aeroporto                                   | Espera (horas) |
 | SBFZ | Fortaleza - CE      | Aeroporto Internacional Pinto Martins            | 1              |
 | SBBR | Brasilia - DF       | Aeroporto Internacional de Brasília              | 2              |
 | SBGR | Guarulhos - SP      | Aeroporto Internacional de São Paulo-Guarulhos   | 3              |

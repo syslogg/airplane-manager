@@ -24,6 +24,7 @@ struct flight {
 	int id;
 	int time;
 	int stopover;
+	int distance;
 	char departure[8];
 	char arrival[8];
 };
@@ -73,6 +74,12 @@ void selectCost(FlightMap * fm, COST_TYPE c) {
 		case BY_TIME:
 			break;
 		case BY_DISTANCE:
+			fm->tempCost = c;
+			int i, len = length(fm->flights);
+			for(i = 0; i < len; i++) {
+				Flight * f = (Flight *) getValue(fm->flights,i);
+				setWeightEdge(fm->g, f->id,f->distance);
+			}
 			break;
 		case BY_TIME_FLIGHT:
 			fm->tempCost = c;
@@ -110,7 +117,6 @@ void loadAirports(FlightMap * fm, char * filename) {
 	fgets(buffer,sizeof(buffer),f); //Remove header
 
 	while(fgets(buffer,sizeof(buffer),f) != NULL) {
-		//| SBFZ | Fortaleza - CE      | Aeroporto Internacional Pinto Martins            | 0              |
 		sscanf(buffer, "| %[^|] | %[^|] | %[^|] | %d", icao, state_uf, name, &timee);
 		char icao_[8] = "", state_uf_[50] = "", name_[200] = "";
 		trim_both(icao,icao_);
@@ -136,21 +142,21 @@ void loadAirports(FlightMap * fm, char * filename) {
 void loadFlights(FlightMap * fm, char * filename) {
 	FILE * f = fopen(filename, "r");
 	char buffer[1023], departure[8], arrival[8];
-	int id, timee, stopover;
+	int id, timee, stopover, distance;
 
 	fgets(buffer,sizeof(buffer),f); //Remove header
 
 	while(fgets(buffer,sizeof(buffer),f) != NULL) {
-		//| 1  | 4         | 2       | SBFZ    | SBGR    |
-		sscanf(buffer, "| %d | %d | %d | %[^|] | %[^|]", &id, &timee, &stopover, departure, arrival);
+		sscanf(buffer, "| %d | %d | %d | %d | %[^|] | %[^|]", &id, &timee, &distance, &stopover, departure, arrival);
 		char departure_[8] = "",arrival_[8] = "";
-		trim_both(departure,departure_);
+		trim_both(departure, departure_);
 		trim_both(arrival,arrival_);
 
 		Flight * flight = (Flight *) malloc(sizeof(struct flight));
 
 		flight->time = timee;
 		flight->id = id;
+		flight->distance = distance;
 		strcpy(flight->departure, departure_);
 		strcpy(flight->arrival, arrival_);
 
@@ -175,8 +181,6 @@ Airport * getAirportByIcao(FlightMap * fm, char * icao) {
 
 void trim_both(char * title_p, char * title_tp) {
     int flag = 0;
-
-    // from left
     while(*title_p) {
         if(!isspace((unsigned char) *title_p) && flag == 0) {
             *title_tp++ = *title_p;
@@ -187,8 +191,6 @@ void trim_both(char * title_p, char * title_tp) {
             *title_tp++ = *title_p;
         }
     }
-
-    // from right
     while(1) {
         title_tp--;
         if(!isspace((unsigned char) *title_tp) && flag == 0) {
