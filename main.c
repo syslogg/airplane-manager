@@ -114,10 +114,8 @@ void command(FlightMap * fm, char * cmd) {
 	}else if (!strcmp(cmd,"help")) {
 		clear();
 		printf("---------======- Ajuda - Sistema de Gerenciamento de Voos com Grafos -======---------\n");
-		printf("\n");
-		printf("\n");
-		printf("\n");
-		printf("\n");
+		printf("- Comando: flight\n");
+		printf("Seleção de menu para calculo do VOO\n");
 	} else {
 		clear();
 		printf("Esse comando não existe!\nUse o comando 'help' para ajuda.");
