@@ -40,7 +40,6 @@ struct flightMap {
 	COST_TYPE tempCost;
 };
 
-//TODO: Desenvolver um algoritmo para determinar se existe algum aeroporto a partir do qual é possível atingir todos os outros.
 
 typedef struct airport Airport;
 typedef struct flight Flight;
@@ -57,6 +56,7 @@ void console(FlightMap * fm, bool write);
 void command(FlightMap * fm, char * cmd);
 void chooses(FlightMap * fm, COST_TYPE * c, char * derp, char * arri);
 void clear();
+void airportsAllConnect(FlightMap * fm);
 
 int main(int argc, char *argv[]) {
 
@@ -72,11 +72,7 @@ int main(int argc, char *argv[]) {
 	printf("----====- Gerenciamento de Voos e Aeroportos -====----\n");
 	printf("\nUse o comando 'help' para ajuda\n");
 	printf("Os aeroportos e rotas ja foram carregados!\n");
-	//printGraph(fm->g);
-	//printf("\n\n");
 	console(fm,true);
-	/*selectCost(fm,BY_TIME);
-	bestCost(fm, "SBGL", "SBFZ");*/
 
 	getchar();
 	return 0;
@@ -116,6 +112,9 @@ void command(FlightMap * fm, char * cmd) {
 		printf("---------======- Ajuda - Sistema de Gerenciamento de Voos com Grafos -======---------\n");
 		printf("- Comando: flight\n");
 		printf("Seleção de menu para calculo do VOO\n");
+	} else if (!strcmp(cmd,"allpath")) {
+		clear();
+		airportsAllConnect(fm);
 	} else {
 		clear();
 		printf("Esse comando não existe!\nUse o comando 'help' para ajuda.");
@@ -123,6 +122,18 @@ void command(FlightMap * fm, char * cmd) {
 		clear();
 	}
 
+}
+
+//TODO: Desenvolver um algoritmo para determinar se existe algum aeroporto a partir do qual é possível atingir todos os outros.
+void airportsAllConnect(FlightMap * fm){
+	List * listOfIds = weightVertex(fm->g);
+
+	int i, len=length(listOfIds);
+	printf("--== Aeroportos que é possivel atingir todos os outros ==--"); //Alterar pesos para algum valor acima de zero dos pesos
+	for(i = 0; i < len; i++) {
+		int keyV = getValueInt(listOfIds,i);
+		printf("- %s\n", getName(fm->g, i));
+	}
 }
 
 void chooses(FlightMap * fm, COST_TYPE * c, char * derp, char * arri) {

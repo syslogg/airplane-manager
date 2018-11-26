@@ -25,8 +25,9 @@ typedef struct bellmanFord BellmanFord;
 BellmanFord * initAlgorithms(Graph * g,int keyVertexSource);
 void relax(VertexBellmanFord * source, VertexBellmanFord * dest, int w);
 VertexBellmanFord * findVertexBf(BellmanFord * bf, int key);
-int bellmanFord(Graph * g, BellmanFord * bf, int keyFrom, int keyTo);
+int bellmanFord(Graph * g, BellmanFord * bf, int keyFrom);
 List * mountPath(BellmanFord * bf, int keySrc, int keyDest);
+int weightInfinity (BellmanFord * bf);
 
 
 /*
@@ -39,14 +40,44 @@ List * minPath(Graph * g, int keyFrom, int keyTo) {
     //Imprimir o caminho
     BellmanFord * bf = initAlgorithms(g, keyFrom);
     
-    if(bellmanFord(g, bf, keyFrom, keyTo)){
+    if(bellmanFord(g, bf, keyFrom)){
         //Pega os anteriores a partir do destino
         return mountPath(bf,keyFrom,keyTo);
     }
     return NULL;
 }
 
+List * weightVertex(Graph * g)  {
+    List * vertexesList = getVertexList(g);
+    int i = 0, len = length(vertexesList);
+    List * result = list();
+    for (i = 0; i < len; i++) {
+        int * key = (int *) malloc(sizeof(int));
+        *key = getValueInt(vertexesList, i);
+
+        BellmanFord * bf = initAlgorithms(g, *key);
+        if(bellmanFord(g, bf, *key)){
+            if(weightInfinity(bf)){
+                listAdd(result, key);
+            }
+        }
+    }
+        
+    return result;
+}
+
 // Private methods
+
+int weightInfinity (BellmanFord * bf) {
+    int i = 0, len = length(bf->vertexes);
+    for (i = 0; i < len; i++) {
+        VertexBellmanFord * act = (VertexBellmanFord *) getValue(bf->vertexes, i);
+        if(act->weight == INT_MAX) {
+            return 0;
+        }
+    }
+    return 1;
+}
 
 List * mountPath(BellmanFord * bf, int keySrc, int keyDest) {
 
@@ -68,17 +99,9 @@ List * mountPath(BellmanFord * bf, int keySrc, int keyDest) {
     reverseList(path);
 
     return path;
-
-    /*int i, len = length(path);
-    printf("\n[ ");
-    for (i = 0; i < len; i++) {
-        printf(", %d", getValueInt(path, i));
-    }
-    printf(" ]\n");*/
-
 }
 
-int bellmanFord(Graph * g, BellmanFord * bf, int keyFrom, int keyTo) {
+int bellmanFord(Graph * g, BellmanFord * bf, int keyFrom) {
     List * vertexes = bf->vertexes;
     int i, lenVertex = length(vertexes);
 
@@ -108,7 +131,7 @@ int bellmanFord(Graph * g, BellmanFord * bf, int keyFrom, int keyTo) {
         VertexBellmanFord * dest = findVertexBf(bf,destId);
 
         if(dest->weight > (src->weight == INT_MAX ? INT_MAX : src->weight + getWeightEdge(g,edgeId))) {
-            printf("Há ciclo infinito!");
+            printf("| %d |",dest->weight);
             return 0;
         }
     }
