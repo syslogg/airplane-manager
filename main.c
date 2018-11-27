@@ -111,7 +111,9 @@ void command(FlightMap * fm, char * cmd) {
 		clear();
 		printf("---------======- Ajuda - Sistema de Gerenciamento de Voos com Grafos -======---------\n");
 		printf("- Comando: flight\n");
-		printf("Seleção de menu para calculo do VOO\n");
+		printf("Seleção de menu para calculo do VOO\n\n");
+		printf("- Comando: allpath\n");
+		printf("Mostra todos os aeroportos que tem conexões com todos. ");
 	} else if (!strcmp(cmd,"allpath")) {
 		clear();
 		airportsAllConnect(fm);
