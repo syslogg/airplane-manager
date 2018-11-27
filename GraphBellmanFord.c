@@ -88,17 +88,22 @@ List * mountPath(BellmanFord * bf, int keySrc, int keyDest) {
     *v = keyDest;
     listAdd(path, v);
 
-    while (keySrc != keyAct) {
-        VertexBellmanFord * act = findVertexBf(bf,keyAct);
-        int * v = (int *) malloc(sizeof(int));
-        *v = act->keyPrev;
-        listAdd(path, v);
-        keyAct = act->keyPrev;
-    }
-    
-    reverseList(path);
+    int weightDest = findVertexBf(bf,keyDest)->weight;
 
-    return path;
+    if(weightDest != INT_MAX) {
+        while (keySrc != keyAct) {
+            VertexBellmanFord * act = findVertexBf(bf,keyAct);
+            int * v = (int *) malloc(sizeof(int));
+            *v = act->keyPrev;
+            listAdd(path, v);
+            keyAct = act->keyPrev;
+        }
+        
+        reverseList(path);
+        return path;
+    }
+    //printf("\nDestino inatingivel!\n");
+    return NULL;
 }
 
 int bellmanFord(Graph * g, BellmanFord * bf, int keyFrom) {

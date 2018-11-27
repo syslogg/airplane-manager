@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "Graph.h"
 #include "GraphMinPath.h"
 
@@ -66,8 +67,8 @@ int main(int argc, char *argv[]) {
 	fm->flights = list();
 	fm->tempCost = -1;
 
-	loadAirports(fm, "data/airports.txt");
-	loadFlights(fm, "data/flights.txt");
+	loadAirports(fm, "data/airports_t.txt");
+	loadFlights(fm, "data/flights_t.txt");
 
 	printf("----====- Gerenciamento de Voos e Aeroportos -====----\n");
 	printf("\nUse o comando 'help' para ajuda\n");
@@ -107,7 +108,11 @@ void command(FlightMap * fm, char * cmd) {
 		command(fm, cmd);
     } else if (!strcmp(cmd,"cls")){
 		clear();
-	}else if (!strcmp(cmd,"help")) {
+	} else if (!strcmp(cmd,"print")){
+		clear();
+		printGraph(fm->g);
+		getchar();
+	} else if (!strcmp(cmd,"help")) {
 		clear();
 		printf("---------======- Ajuda - Sistema de Gerenciamento de Voos com Grafos -======---------\n");
 		printf("- Comando: flight\n");
@@ -123,7 +128,7 @@ void command(FlightMap * fm, char * cmd) {
 		getchar();
 		clear();
 	}
-
+	getchar();
 }
 
 //TODO: Desenvolver um algoritmo para determinar se existe algum aeroporto a partir do qual é possível atingir todos os outros.
@@ -141,22 +146,32 @@ void airportsAllConnect(FlightMap * fm){
 void chooses(FlightMap * fm, COST_TYPE * c, char * derp, char * arri) {
 	int len = length(fm->airports), i;
 	int input;
-	printf("Escolha o aeroporto de origem\n\n");
+	printf("Escolha o aeroporto de origem:\n\n");
 	for (i = 0; i < len;i++) {
 		Airport * act = (Airport *) getValue(fm->airports, i);
 		printf("%d. %s | %s - %s\n", i+1, act->icao, act->name, act->cityState);
 	}
+
+	printf("\n>");
+	fflush(stdin);
 	scanf("%d", &input);
+	fflush(stdin);
+
 	input -= 1;
 	strcpy(derp,((Airport *)getValue(fm->airports,input))->icao);
 	clear();
 
-	printf("Escolha o aeroporto de destino\n\n");
+	printf("Escolha o aeroporto de destino:\n\n");
 	for (i = 0; i < len;i++) {
 		Airport * act = (Airport *) getValue(fm->airports, i);
 		printf("%d. %s | %s - %s\n", i+1, act->icao, act->name, act->cityState);
 	}
+	printf("\n>");
+
+	fflush(stdin);
 	scanf("%d", &input);
+	fflush(stdin);
+
 	input -= 1;
 	strcpy(arri, ((Airport *) getValue(fm->airports,input))->icao);
 	clear();
@@ -166,7 +181,12 @@ void chooses(FlightMap * fm, COST_TYPE * c, char * derp, char * arri) {
 	printf("2. Pela duração total.\n");
 	printf("3. Por distância percorrida.\n");
 	printf("4. Por tempo de voo.\n");
+
+	printf("\n\n>");
+
+	fflush(stdin);
 	scanf("%d",&input);
+	fflush(stdin);
 	*c = input;
 	clear();
 }
@@ -214,30 +234,46 @@ void bestCost(FlightMap * fm, char * departure, char * arrival) {
 
 	if(fm->tempCost == BY_STOP){
 		List * path = minPath(fm->g, derp->keyVertex, arriv->keyVertex);
-		int cost = calculateCost(fm->g,path) - 1;
-		printPath(fm, path);
-		printf("\nQuantidade de paradas do Voo: %d", cost);
+		if(path != NULL) {
+			int cost = calculateCost(fm->g,path) - 1;
+			printPath(fm, path);
+			printf("\nQuantidade de paradas do Voo: %d", cost);
+		} else {
+			printf("\nNao ha voos para chegar nesse destino.");
+		}
 	} else if(fm->tempCost == BY_TIME) {
 		List * path = minPath(fm->g, derp->keyVertex, arriv->keyVertex);
-		int cost = calculateCost(fm->g,path) - arriv->wait;
-		printPath(fm, path);
-		printf("\nTempo total para chegar ao destino: %d", cost);
+		if(path != NULL) {
+			int cost = calculateCost(fm->g,path) - arriv->wait;
+			printPath(fm, path);
+			printf("\nTempo total para chegar ao destino: %d", cost);
+		} else {
+			printf("\nNao ha voos para chegar nesse destino.");
+		}
 	} else if (fm->tempCost == BY_DISTANCE) {
 		List * path = minPath(fm->g, derp->keyVertex, arriv->keyVertex);
-		int cost = calculateCost(fm->g,path);
-		printf("\nDistancia Percorrida: %d", cost);
-		printPath(fm,path);
+		if(path != NULL) {
+			int cost = calculateCost(fm->g,path);
+			printf("\nDistancia Percorrida: %d", cost);
+			printPath(fm,path);
+		} else {
+			printf("\nNao ha voos para chegar nesse destino.");
+		}
 	} else if(fm->tempCost == BY_TIME_FLIGHT) {
 		List * path = minPath(fm->g, derp->keyVertex, arriv->keyVertex);
-		int cost = calculateCost(fm->g,path);
-		printf("\nTempo de Voo: %d", cost);
-		printPath(fm,path);
+		if(path != NULL) {
+			int cost = calculateCost(fm->g,path);
+			printf("\nTempo de Voo: %d", cost);
+			printPath(fm,path);
+		} else {
+			printf("\nNao ha voos para chegar nesse destino.");
+		}
 	}
 
 }
 
 void printPath(FlightMap * fm, List * path) {
-	printf("Percurso: ");
+	printf("\nPercurso: ");
 	int i, len = length(path);
 	for (i = 0; i < len; i++) {
 		int vKey = getValueInt(path,i);
@@ -277,14 +313,14 @@ void loadAirports(FlightMap * fm, char * filename) {
 
 void loadFlights(FlightMap * fm, char * filename) {
 	FILE * f = fopen(filename, "r");
-	char buffer[1023], departure[8], arrival[8];
+	char buffer[1023], departure[64] = "", arrival[64] = "";
 	int id, timee, stopover, distance;
 
 	fgets(buffer,sizeof(buffer),f); //Remove header
 
 	while(fgets(buffer,sizeof(buffer),f) != NULL) {
-		sscanf(buffer, "| %d | %d | %d | %d | %[^|] | %[^|]", &id, &timee, &distance, &stopover, departure, arrival);
-		char departure_[8] = "",arrival_[8] = "";
+		sscanf(buffer, "| %d | %d | %d | %d | %[^|] | %[^|] |", &id, &timee, &distance, &stopover, departure, arrival);
+		char departure_[64] = "",arrival_[64] = "";
 		trim_both(departure, departure_);
 		trim_both(arrival,arrival_);
 

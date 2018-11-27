@@ -1,0 +1,17 @@
+| ICAO | Cidade/UF      | Nome Aeroporto | Espera (horas) |
+| A    | Fortaleza - CE | Aeroporto A    | 1              |
+| B    | Fortaleza - CE | Aeroporto B    | 1              |
+| C    | Fortaleza - CE | Aeroporto C    | 1              |
+| D    | Fortaleza - CE | Aeroporto D    | 1              |
+| E    | Fortaleza - CE | Aeroporto E    | 1              |
+| F    | Fortaleza - CE | Aeroporto F    | 1              |
+| G    | Fortaleza - CE | Aeroporto G    | 1              |
+| H    | Fortaleza - CE | Aeroporto H    | 1              |
+| I    | Fortaleza - CE | Aeroporto I    | 1              |
+| J    | Fortaleza - CE | Aeroporto J    | 1              |
+| K    | Fortaleza - CE | Aeroporto K    | 1              |
+| L    | Fortaleza - CE | Aeroporto L    | 1              |
+| M    | Fortaleza - CE | Aeroporto M    | 1              |
+| N    | Fortaleza - CE | Aeroporto N    | 1              |
+| O    | Fortaleza - CE | Aeroporto O    | 1              |
+| P    | Fortaleza - CE | Aeroporto P    | 1              |
