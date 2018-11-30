@@ -48,7 +48,7 @@ typedef struct flightMap FlightMap;
 
 void loadAirports(FlightMap * fm, char * filename);
 void loadFlights(FlightMap * fm, char * filename);
-void trim_both(char *title_p, char *title_tp);
+void trim_both(char *title_p, char * title_tp);
 Airport * getAirportByIcao(FlightMap * fm, char * icao);
 void selectCost(FlightMap * fm, COST_TYPE c);
 void bestCost(FlightMap * fm, char * departure, char * arrival);
@@ -77,7 +77,7 @@ int main(int argc, char *argv[]) {
 
 	getchar();
 	return 0;
-}
+} 
 
 void console(FlightMap * fm, bool write) {
     while (write) {
@@ -136,7 +136,7 @@ void airportsAllConnect(FlightMap * fm){
 	List * listOfIds = weightVertex(fm->g);
 
 	int i, len=length(listOfIds);
-	printf("--== Aeroportos que é possivel atingir todos os outros ==--"); //Alterar pesos para algum valor acima de zero dos pesos
+	printf("--== Aeroportos que é possivel atingir todos os outros ==--\n\n"); //Alterar pesos para algum valor acima de zero dos pesos
 	for(i = 0; i < len; i++) {
 		int keyV = getValueInt(listOfIds,i);
 		printf("- %s\n", getName(fm->g, i));
@@ -274,10 +274,10 @@ void bestCost(FlightMap * fm, char * departure, char * arrival) {
 
 void printPath(FlightMap * fm, List * path) {
 	printf("\nPercurso: ");
-	int i, len = length(path);
-	for (i = 0; i < len; i++) {
-		int vKey = getValueInt(path,i);
-		printf("%s ", getName(fm->g,vKey));
+	IterateList * il = iterableList(path);
+	int * key;
+	while ((key = (int *)nextIterable(il)) != NULL) {
+		printf("%s ", getName(fm->g, *key));
 	}
 }
 
@@ -340,9 +340,10 @@ void loadFlights(FlightMap * fm, char * filename) {
 
 Airport * getAirportByIcao(FlightMap * fm, char * icao) {
 	if(fm != NULL){
-		int i, len = length(fm->airports);
-		for (i = 0; i < len; i++) {
-			Airport * a = (Airport *) getValue(fm->airports,i);
+		IterateList * il = iterableList(fm->airports);
+		Airport * a;
+
+		while ((a = (Airport *) nextIterable(il)) != NULL) {
 			if(!strcmp(icao, a->icao)) {
 				return a;
 			}

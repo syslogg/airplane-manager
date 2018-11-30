@@ -5,6 +5,7 @@
 
 typedef struct list List;
 typedef struct nodeList NodeList;
+typedef struct iterateList IterateList;
 
 struct nodeList {
     void * b;
@@ -15,6 +16,11 @@ struct list {
     NodeList * first;
     NodeList * last;
     int len;
+};
+
+struct iterateList {
+    NodeList * act;
+    int index;
 };
 
 //Declaring
@@ -34,6 +40,35 @@ List * list() {
 void destroyList(List * l) {
     listClean(l);
     free(l);
+}
+
+//Public
+IterateList * iterableList(List * l) {
+    if(l != NULL) {
+        IterateList * il = (IterateList *) malloc(sizeof(struct iterateList));
+        il->act = l->first;
+        il->index = 0;
+        return il;
+    }
+    return NULL;
+}
+
+//Public
+void * nextIterable(IterateList * il) {
+    if (il != NULL && il->act != NULL) {
+        void * r = il->act->b;
+        il->index++;
+        il->act = il->act->next;
+        return r;
+    }
+    return NULL;
+}
+
+//Public
+void destroyIterableList(IterateList * il) {
+    if (il != NULL) {
+        free(il);
+    }
 }
 
 //Public
