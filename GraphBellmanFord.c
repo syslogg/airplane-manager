@@ -102,7 +102,6 @@ List * mountPath(BellmanFord * bf, int keySrc, int keyDest) {
         reverseList(path);
         return path;
     }
-    //printf("\nDestino inatingivel!\n");
     return NULL;
 }
 

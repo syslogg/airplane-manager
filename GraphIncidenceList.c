@@ -138,13 +138,32 @@ int calculateCost(Graph * g, List * path){
 }
 
 void rmVertex(Graph * g, int key) {
-	//TODO: Method
-	printf("Nao está implementado");
+	IterateList * il = iterableList(g->edges);
+	Edge * e;
+	while ((e = nextIterable(il)) != NULL) {
+		if(e->from->key == key || e->to->key == key) {
+			listRemove(g->edges, getIndexIterate(il));
+		}
+	}
+	destroyIterableList(il);
+
+	IterateList * il_ = iterableList(g->vertexes);
+	Vertex * v;
+	while((e = nextIterable(il_)) != NULL) {
+		if(v->key == key){
+			listRemove(g->vertexes,getIndexIterate(il_));
+		}
+	}
+	destroyIterableList(il_);
 }
 
 void rmEdge(Graph * g, int key) {
-	//TODO: Method
-	printf("Nao está implementado");
+	IterateList * il = iterableList(g->edges);
+	Edge * e;
+	while ((e = nextIterable(il)) != NULL) {
+		listRemove(g->edges,getIndexIterate(il));
+	}
+	destroyIterableList(il);
 }
 
 int getWeightEdge(Graph * g, int keyEdge){
@@ -204,35 +223,55 @@ void setName(Graph * g, int keyVertex, char * str) {
 
 //Private methods
 Vertex * findVertex(Graph * g, int key) {
-	int len = length(g->vertexes);
+	IterateList * il = iterableList(g->vertexes);
+	Vertex * v;
+	while ((v = (Vertex *) nextIterable(il)) != NULL) {
+		if(v->key == key) 
+			return v;
+	}
+	destroyIterableList(il);
+	/*int len = length(g->vertexes);
 	int i;
 	for (i = 0; i < len; i++) {
 		Vertex * act = (Vertex *) getValue(g->vertexes,i);
 		if(act->key == key)
 			return act;
-	}
+	}*/
 	return NULL;
 }
 
 Edge * findEdge(Graph *g, int key) {
-	int len = length(g->edges);
+	IterateList * il = iterableList(g->edges);
+	Edge * e;
+	while ((e = (Edge *) nextIterable(il)) != NULL) {
+		if(e->key == key)
+			return e;
+	}
+	destroyIterableList(il);
+	/*int len = length(g->edges);
 	int i;
 	for (i = 0; i < len; i++) {
 		Edge * act = (Edge *) getValue(g->edges,i);
 		if(act->key == key)
 			return act;
-	}
+	}*/
 	return NULL;
 }
 
 Edge * findEdgeByVertexes(Graph *g, int src, int dest) {
-	int len = length(g->edges);
+	IterateList * il = iterableList(g->edges);
+	Edge * e;
+	while ((e = (Edge *) nextIterable(il)) != NULL) {
+		if(e->from->key == src && e->to->key == dest)
+			return e;
+	}
+	destroyIterableList(il);
+	/*int len = length(g->edges);
 	int i;
 	for (i = 0; i < len; i++) {
 		Edge * act = (Edge *) getValue(g->edges,i);
-		if(act->from->key == src && act->to->key == dest)
-			return act;
-	}
+		
+	}*/
 	return NULL;
 }
 

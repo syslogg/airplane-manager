@@ -14,6 +14,8 @@ void destroyIterableList(IterateList * l);
 
 void * nextIterable(IterateList * il);
 
+int getIndexIterate(IterateList * il);
+
 // TODO: Criar novo list add com numeros inteiros (definir tipos de listas para facilitar a implementacoes de outras atividades)
 void listAdd(List * l, void * item);
 

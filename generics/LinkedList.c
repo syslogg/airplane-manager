@@ -64,6 +64,10 @@ void * nextIterable(IterateList * il) {
     return NULL;
 }
 
+int getIndexIterate(IterateList * il) {
+    return il->index;
+}
+
 //Public
 void destroyIterableList(IterateList * il) {
     if (il != NULL) {

@@ -348,6 +348,8 @@ Airport * getAirportByIcao(FlightMap * fm, char * icao) {
 				return a;
 			}
 		}
+
+		destroyIterableList(il);
 		return NULL;
 	}
 	return NULL;
